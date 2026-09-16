@@ -73,6 +73,20 @@
   <source src="/videos/sysnav-navigation-demo.mp4" type="video/mp4">
   Your browser does not support embedded video.
 </video>
+<h2 id="real-robot-scan-planner-reproduction">Real-robot SCAN-Planner reproduction</h2>
+<p><img src="/images/projects/hkust-scanplanner-x5.png" alt="Insta360 X5 panoramic view captured from the Unitree Go2"></p>
+<p><em>The Insta360 X5 panoramic view used during the real-robot planning test.</em></p>
+<p><img src="/images/projects/hkust-scanplanner-rviz.png" alt="SCAN-Planner trajectory shown in RViz"></p>
+<p><em>Mid-360 measurements were processed by Elevator-LIO and SCAN-Planner to generate a third-order trajectory with 25 control points; the controller and chassis bridge were not running during this capture.</em></p>
+<h2 id="panoramic-depth-and-cross-modal-checks">Panoramic depth and cross-modal checks</h2>
+<p><img src="/images/projects/hkust-dap-depth.png" alt="DAP relative-depth output from the X5 panorama"></p>
+<p><em>DAP ran on an RTX 4090 server and produced relative depth from the real X5 panorama in approximately 102 ms.</em></p>
+<p><img src="/images/projects/hkust-dap-detections.jpg" alt="Depth-aware open-vocabulary detections on the X5 panorama"></p>
+<p><em>The distributed X5-to-Jetson-to-server pipeline associated open-vocabulary detections with relative depth, with an approximately 215 ms measured round trip.</em></p>
+<p><img src="/images/projects/hkust-mid360-projection.png" alt="Initial Mid-360 projection on the X5 panorama"></p>
+<p><em>The raw Mid-360 projection was used to inspect the X5-to-LiDAR alignment.</em></p>
+<p><img src="/images/projects/hkust-mid360-dap-gated.png" alt="Mid-360 points retained after DAP consistency gating"></p>
+<p><em>DAP provided a conservative consistency gate for rejecting obvious projection outliers, not an absolute metric calibration target.</em></p>
 <h2 id="distributed-robot-stack">Distributed robot stack</h2>
 <p>The physical deployment separates real-time robot functions from heavier semantic inference:</p>
 <ul>
