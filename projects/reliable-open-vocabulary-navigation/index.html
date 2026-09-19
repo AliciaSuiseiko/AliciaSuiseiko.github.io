@@ -64,9 +64,14 @@
 <h2 id="system-reproduction-and-deployment">System reproduction and deployment</h2>
 <ul>
 <li>Reproduced SysNav in simulation and traced its panoramic semantic mapping, room-level topology, TARE-based exploration, and execution interfaces.</li>
-<li>Designed and installed the panoramic camera, LiDAR, and Jetson computing setup on a Unitree Go2 and completed initial closed-loop system integration.</li>
+<li>Designed and installed the panoramic camera, LiDAR, and Jetson computing setup on a Unitree Go2, then completed sensor bring-up and the initial cross-device system integration.</li>
 <li>Studied the task-conditioned candidate scoring in ApexNav and the temporal object association and long-term semantic memory in DualMap.</li>
 </ul>
+<h2 id="hardware-adaptation">Hardware adaptation</h2>
+<p><img src="/images/projects/hkust-go2-jetson-base-cad.png" alt="CAD view of the GO2 EDU Jetson and power-accessory base"></p>
+<p><em>I adapted the open GO2 EDU sensor frame with a lower payload deck for the Jetson and a rear restraint for portable power accessories.</em></p>
+<p><img src="/images/projects/hkust-go2-x5-holder-cad.png" alt="CAD view of the elevated Insta360 X5 holder"></p>
+<p><em>A second structure raises the Insta360 X5 above the onboard payload and uses its standard 1/4-inch camera interface, replacing the depth-camera support used by the original layout. The editable SolidWorks and printable files are available in the <a href="https://github.com/AliciaSuiseiko/IADC-GO2-EDU">hardware repository</a>.</em></p>
 <h2 id="simulation-baseline">Simulation baseline</h2>
 <p>This one-minute excerpt condenses the first four minutes of a longer SysNav run. It shows panoramic open-vocabulary perception alongside the evolving room-level map, semantic annotations, and planned exploration trajectories.</p>
 <video class="experience-video" controls muted playsinline preload="metadata" poster="/images/projects/sysnav-simulation-demo.jpg">
@@ -90,16 +95,16 @@
 <h2 id="distributed-robot-stack">Distributed robot stack</h2>
 <p>The physical deployment separates real-time robot functions from heavier semantic inference:</p>
 <ul>
-<li><strong>Jetson edge:</strong> camera and LiDAR acquisition, FAST-LIO2 state estimation, SCAN-Planner local motion, Go2 control, and local safety handling.</li>
+<li><strong>Jetson edge:</strong> camera and LiDAR acquisition, LIO state estimation, SCAN-Planner local motion, Go2 control, and local safety handling.</li>
 <li><strong>GPU server:</strong> SysNav semantic mapping, vision-language services, and experiments with ApexNav and DualMap components.</li>
 <li><strong>Cross-host transport:</strong> compressed camera and semantic results are bridged through a topic whitelist. Because campus routing filters normal DDS discovery, I configured a Fast DDS discovery server over TCP rather than bridging low-level joint commands.</li>
 </ul>
 <p>This work made network delay, stale model output, changed candidate sets, and fallback behavior concrete system constraints rather than abstract concerns.</p>
 <h2 id="current-direction">Current direction</h2>
 <p>I am developing a modular extension that keeps SysNav’s geometric planning and execution backbone while examining how task-conditioned semantic evidence should influence candidate selection over time. Evidence is intended to carry confidence, timestamp, cross-view agreement, and map/query version so that stale or contradictory observations can trigger re-observation or lose authority instead of becoming unconditional goals.</p>
-<p>I am also adapting SCAN-Planner for local motion execution. The proposed semantic layer only ranks candidates that remain reachable and collision-checked; timeout, invalid evidence, or model failure returns control to geometric exploration.</p>
+<p>I have connected SCAN-Planner to the physical sensor and state-estimation path and verified trajectory generation; controller and chassis integration remain the next execution step. The proposed semantic layer only ranks candidates that remain reachable and collision-checked. Timeout, invalid evidence, or model failure returns control to geometric exploration.</p>
 <h2 id="status-and-contribution-boundary">Status and contribution boundary</h2>
-<p>The simulation baseline, source-level analysis, platform integration, and distributed deployment path are complete. The semantic-evidence extension and comparative experiments are in progress. SysNav, ApexNav, DualMap, FAST-LIO2, and SCAN-Planner are upstream research systems; my contribution is their reproduction, interface analysis, hardware deployment, and the new reliability-focused integration being developed on top of them.</p>
+<p>The simulation baseline, source-level analysis, platform integration, distributed DAP inference, and real-robot SCAN-Planner trajectory preview are complete. Closed-loop SCAN-Planner motion and the semantic-evidence experiments remain in progress. SysNav, ApexNav, DualMap, Elevator-LIO, DAP, and SCAN-Planner are upstream research systems; my contribution is their reproduction, interface analysis, hardware deployment, cross-modal validation, and the reliability-focused integration being developed on top of them.</p>
 <h2 id="technical-focus">Technical focus</h2>
 <p>ROS 2, panoramic perception, LiDAR, semantic mapping, frontier exploration, vision-language models, temporal evidence, asynchronous inference, Fast DDS discovery, local planning, and real-robot deployment.</p></div></article></div><footer class="footer"><div class="flex items-center gap-4"><span class="body-xs">&copy; 2026 Aiwei Lian.</span></div><div class="flex items-center gap-4"><span class="body-xs hidden sm:inline-block">Built with <a href="https://github.com/rubzip/academic-portfolio-astro/" target="_blank" rel="noopener noreferrer" class="link">Academic Portfolio Astro</a></span><button id="theme-toggle" aria-label="Toggle Dark Mode" class="btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-sun">
 	<path stroke="none" d="M0 0h24v24H0z" fill="none" />
